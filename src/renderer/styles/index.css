@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family:
+      'Inter',
+      'Segoe UI Variable',
+      'Segoe UI',
+      system-ui,
+      -apple-system,
+      sans-serif;
+  }
+}
+
+/* Sleek slim scrollbars for both library & horizontal sidescroller */
+.manga-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.manga-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 16, 22, 0.4);
+}
+
+.manga-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+}
+
+.manga-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 63, 94, 0.55);
+}
+
+/* Subtle shimmer for lazy page slots */
+@keyframes pageShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.page-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: pageShimmer 1.6s ease-in-out infinite;
+}

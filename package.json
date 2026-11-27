@@ -1,0 +1,105 @@
+{
+  "name": "manga-reader",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Pedro",
+  "description": "Offline desktop Manga Reader sidescroller supporting CBZ, CBR, EPUB, and PDF",
+  "type": "module",
+  "main": "dist-electron/main.cjs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "icon:generate": "node scripts/generate-icon.mjs",
+    "build:electron": "node scripts/build-electron.mjs",
+    "build:renderer": "vite build",
+    "build": "npm run build:electron && npm run build:renderer",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package:win": "npm run icon:generate && npm run build && electron-builder --win portable",
+    "package": "npm run package:win"
+  },
+  "dependencies": {
+    "node-unrar-js": "^2.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.25.0",
+    "fast-xml-parser": "^4.5.0",
+    "jsdom": "^26.0.0",
+    "lucide-react": "^0.475.0",
+    "node-stream-zip": "^1.15.0",
+    "pdfjs-dist": "^4.10.38",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vitest": "^3.0.5",
+    "zustand": "^5.0.0"
+  },
+  "build": {
+    "appId": "com.pedro.komaroll",
+    "productName": "KomaRoll",
+    "compression": "maximum",
+    "electronLanguages": [
+      "en-US"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/node-unrar-js/dist/js/unrar.wasm"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*.cjs",
+      "build/icon.ico",
+      "node_modules/node-unrar-js/package.json",
+      "node_modules/node-unrar-js/dist/**/*.js",
+      "node_modules/node-unrar-js/dist/**/*.wasm",
+      "!node_modules/node-unrar-js/esm/**",
+      "!**/*.map",
+      "!**/*.d.ts",
+      "!**/*.md"
+    ],
+    "fileAssociations": [
+      {
+        "ext": "cbz",
+        "name": "Comic Book ZIP Archive",
+        "role": "Viewer"
+      },
+      {
+        "ext": "cbr",
+        "name": "Comic Book RAR Archive",
+        "role": "Viewer"
+      },
+      {
+        "ext": "epub",
+        "name": "EPUB Manga / Book",
+        "role": "Viewer"
+      }
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "KomaRoll-${version}-portable.exe"
+    }
+  }
+}
